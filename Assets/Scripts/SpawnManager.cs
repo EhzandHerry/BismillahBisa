@@ -16,21 +16,25 @@ public class SpawnManager : MonoBehaviour
     //private float spawnLimitXLeft = -3.0f;
     //private float spawnLimitXRight = 3.0f;
 
-
+    private float initialSpawnDelay = 2.0f;
+    private float spawnDelay = 2.0f; // Delay awal dan delay saat ini
+    private float spawnDelayDecreaseRate = 0.0f; // Tingkat pengurangan delay per detik
+    private float minSpawnDelay = 0.5f; // Delay minimum yang diinginkan
 
     // Start is called before the first frame update
     void Start()
     {
         playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
-
-        InvokeRepeating("SpawnObstacle", 2.0f, 2.0f);
-
+        InvokeRepeating("SpawnObstacle", initialSpawnDelay, spawnDelay);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // Meningkatkan tingkat spawn setiap detik
+        spawnDelay -= spawnDelayDecreaseRate * Time.deltaTime;
+        // Pastikan spawnDelay tidak kurang dari minSpawnDelay
+        spawnDelay = Mathf.Max(spawnDelay, minSpawnDelay);
     }
 
     public void SpawnObstacle()
@@ -56,7 +60,7 @@ public class SpawnManager : MonoBehaviour
             }
 
             //float randomX = Random.Range(spawnLimitXLeft, spawnLimitXRight);
-            Vector3 spawnPos = new Vector3(spawnX, 2.0f, 25.0f);
+            Vector3 spawnPos = new Vector3(spawnX, 2.0f, 40.0f);
 
             // Pilih secara acak obstacle dari array obstaclePrefabs
             int randomObstacleIndex = Random.Range(0, obstaclePrefabs.Length);

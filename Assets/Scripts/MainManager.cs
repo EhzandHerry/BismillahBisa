@@ -16,6 +16,9 @@ public class MainManager : MonoBehaviour
     //singleton
     public static MainManager Instance { get; set; }
 
+    public GameManager gameManager;
+    public PlayerController playerController;
+
     public TMP_InputField inputField;
     public TextMeshProUGUI display_nama;
 
@@ -25,7 +28,6 @@ public class MainManager : MonoBehaviour
     {
 
         asBackSound = GetComponent<AudioSource>();
-
 
         if (Instance == null)
         {
@@ -78,5 +80,25 @@ public class MainManager : MonoBehaviour
     public void LoadData()
     {
         inputField.text = PlayerPrefs.GetString("Input");
+    }
+
+    public void RestartGame()
+    {
+        // Reset game state variables
+        playerController.gameOver = false;
+        Time.timeScale = 1; // Resume game time
+
+        // Optionally, reset other game elements here (e.g., player position, scores, etc.)
+
+        // Reinitialize the scene if needed
+        if (gameManager != null)
+        {
+            gameManager.RestartGame();
+        }
+        else
+        {
+            Debug.LogWarning("GameManager not found. Scene may not be fully reset.");
+        }
+        Debug.Log("Game telah di-restart!");
     }
 }

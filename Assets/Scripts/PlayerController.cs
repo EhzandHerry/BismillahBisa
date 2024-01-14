@@ -25,7 +25,9 @@ public class PlayerController : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
-
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
 
         playerRb = GetComponent<Rigidbody>();
         Physics.gravity *= 1.0f;
@@ -89,6 +91,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             StartCoroutine(ChangeSizeTemporarily(1.0f, 1.0f)); // Ganti angka sesuai kebutuhan
+            PlayMoveSound();
         }
 
         IEnumerator ChangeSizeTemporarily(float newSizeX, float newSizeY)

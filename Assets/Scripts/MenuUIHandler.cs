@@ -29,6 +29,8 @@ public class MenuUIHandler : MonoBehaviour
     }
     public void BtnStart()
     {
+        Debug.Log("Tombol Mulai diklik!");
+        MainManager.Instance.RestartGame();
         SceneManager.LoadScene(1);
         //untuk memanggil scene lain
         //dipanggil di start button dibagian method piih, menuUIHandler trus ke method StartMain
@@ -44,8 +46,13 @@ public class MenuUIHandler : MonoBehaviour
 
     public void BtnRst()
     {
-        SceneManager.LoadScene(1);
-       
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (gameManager != null)
+        {
+            //MainManager.Instance.RestartGame();
+            gameManager.RestartGame();
+        }
+
     }
 
     public void SaveName()
